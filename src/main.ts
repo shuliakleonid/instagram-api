@@ -12,6 +12,7 @@ const options = {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     preflightContinue: false,
     credentials: true,
+    withCredentials: true,
     allowedHeaders: 'Content-Type, Accept',
 };
 
