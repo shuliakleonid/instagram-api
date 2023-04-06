@@ -28,6 +28,7 @@ async function bootstrap() {
     const baseApp = await NestFactory.create(AppModule);
     const app = configNestApp(baseApp);
 
+    app.enableCors(options);
     const swaggerConfig = new DocumentBuilder()
         .setTitle('Inctagram API')
         .setDescription('Powerfull team should use this api to develop the best Inctagramm app.' + ' ' + 'Base URL is https://it-team2-backend-mirror.vercel.app')
@@ -41,8 +42,6 @@ async function bootstrap() {
     SwaggerModule.setup('swagger', app, swaggerDoc);
 
     app.use(cookieParser());
-
-    app.enableCors(options);
 
     await app.listen(5000);
 
