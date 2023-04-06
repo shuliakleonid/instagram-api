@@ -15,7 +15,7 @@ const options = {
     preflightContinue: false,
     credentials: true,
     withCredentials: true,
-    allowedHeaders: 'Content-Type, Accept',
+    allowedHeaders: 'Content-Type, Accept, Authorization',
 };
 
 async function bootstrap() {
@@ -35,7 +35,7 @@ async function bootstrap() {
     SwaggerModule.setup('swagger', app, swaggerDoc);
 
     app.use(cookieParser());
-    app.enableCors();
+    app.enableCors(options);
     await app.listen(3000);
 
     // get the swagger json file (if app is running in development mode)
