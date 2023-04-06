@@ -33,7 +33,7 @@ async function bootstrap() {
     SwaggerModule.setup('swagger', app, swaggerDoc);
 
     app.enableCors({
-        origin: '*',
+        origin: true,
         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     });
 
