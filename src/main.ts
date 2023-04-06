@@ -8,7 +8,7 @@ import { configNestApp } from './config.main';
 
 const serverUrl = 'http://localhost:5000';
 const options = {
-    origin: ['http://localhost:3000'],
+    origin: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     preflightContinue: false,
     credentials: true,
