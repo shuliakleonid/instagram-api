@@ -11,9 +11,9 @@ import cookieParser from 'cookie-parser';
 const serverUrl = 'http://localhost:5000';
 const options = {
     origin: 'http://localhost:3000',
-    // methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    // preflightContinue: false,
-    // credentials: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+    credentials: true,
     // allowedHeaders: 'Content-Type, Accept, Authorization',
 };
 
@@ -29,6 +29,7 @@ async function bootstrap() {
     const app = configNestApp(baseApp);
 
     app.enableCors(options);
+    app.use(cors());
     const swaggerConfig = new DocumentBuilder()
         .setTitle('Inctagram API')
         .setDescription('Powerfull team should use this api to develop the best Inctagramm app.' + ' ' + 'Base URL is https://it-team2-backend-mirror.vercel.app')
