@@ -9,20 +9,20 @@ import { configNestApp } from './config.main';
 import cookieParser from 'cookie-parser';
 
 const serverUrl = 'http://localhost:5000';
-// const options = {
-//     origin: true,
-//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-//     preflightContinue: false,
-//     credentials: true,
-//     allowedHeaders: 'Content-Type, Accept, Authorization',
-// };
-
 const options = {
-    origin: '*',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,LINK,UNLINK',
+    origin: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     preflightContinue: false,
-    optionsSuccessStatus: 204,
+    credentials: true,
+    allowedHeaders: 'Content-Type, Accept, Authorization',
 };
+
+// const options = {
+//     origin: '*',
+//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,LINK,UNLINK',
+//     preflightContinue: false,
+//     optionsSuccessStatus: 204,
+// };
 
 async function bootstrap() {
     const baseApp = await NestFactory.create(AppModule);
@@ -42,6 +42,7 @@ async function bootstrap() {
 
     app.use(cookieParser());
     app.enableCors(options);
+
     await app.listen(3000);
 
     // get the swagger json file (if app is running in development mode)
