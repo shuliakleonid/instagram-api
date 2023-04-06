@@ -11,7 +11,7 @@ window.onload = function() {
   "swaggerDoc": {
     "openapi": "3.0.0",
     "paths": {
-      "/auth/me": {
+      "/api/auth/me": {
         "get": {
           "operationId": "AuthController_authMe",
           "summary": "Get user's info. User should have access token",
@@ -52,7 +52,7 @@ window.onload = function() {
           ]
         }
       },
-      "/auth/registration": {
+      "/api/auth/registration": {
         "post": {
           "operationId": "AuthController_registration",
           "summary": "Registration for users",
@@ -124,7 +124,7 @@ window.onload = function() {
           ]
         }
       },
-      "/auth/registration-confirmation": {
+      "/api/auth/registration-confirmation": {
         "post": {
           "operationId": "AuthController_registrationConfirmation",
           "summary": "User can activate account by confirmation code",
@@ -191,7 +191,7 @@ window.onload = function() {
           ]
         }
       },
-      "/auth/registration-email-resending": {
+      "/api/auth/registration-email-resending": {
         "post": {
           "operationId": "AuthController_registrationEmailResending",
           "summary": "Send confirmation code to user's email",
@@ -258,7 +258,7 @@ window.onload = function() {
           ]
         }
       },
-      "/auth/login": {
+      "/api/auth/login": {
         "post": {
           "operationId": "AuthController_login",
           "summary": "User can login and do something into app",
@@ -322,7 +322,7 @@ window.onload = function() {
           ]
         }
       },
-      "/auth/refresh-token": {
+      "/api/auth/refresh-token": {
         "post": {
           "operationId": "AuthController_refreshToken",
           "summary": "User can update refresh and access tokens. User should have refresh token",
@@ -358,7 +358,7 @@ window.onload = function() {
           ]
         }
       },
-      "/auth/password-recovery-code": {
+      "/api/auth/password-recovery-code": {
         "post": {
           "operationId": "AuthController_passwordRecoveryCode",
           "summary": "User can request recovery code to set new password",
@@ -425,7 +425,7 @@ window.onload = function() {
           ]
         }
       },
-      "/auth/new-password": {
+      "/api/auth/new-password": {
         "post": {
           "operationId": "AuthController_newPassword",
           "summary": "User can set new password. User should have password recovery code",
@@ -499,7 +499,7 @@ window.onload = function() {
           ]
         }
       },
-      "/auth/logout": {
+      "/api/auth/logout": {
         "post": {
           "operationId": "AuthController_logout",
           "summary": "User can logout. User should have refresh token. User's access and refresh token will be deleted",
@@ -522,7 +522,7 @@ window.onload = function() {
           ]
         }
       },
-      "/testing/db-user/{userEmail}": {
+      "/api/testing/db-user/{userEmail}": {
         "get": {
           "operationId": "TestsController_getUser",
           "summary": "Get DB user by email",
@@ -549,7 +549,7 @@ window.onload = function() {
           ]
         }
       },
-      "/testing/db-users": {
+      "/api/testing/db-users": {
         "get": {
           "operationId": "TestsController_getUsers",
           "summary": "Get DB users",
@@ -573,7 +573,7 @@ window.onload = function() {
           ]
         }
       },
-      "/testing/activate-user/{userEmail}": {
+      "/api/testing/activate-user/{userEmail}": {
         "put": {
           "operationId": "TestsController_activateUser",
           "summary": "Activate user's account",
@@ -600,7 +600,7 @@ window.onload = function() {
           ]
         }
       },
-      "/testing/all-data": {
+      "/api/testing/all-data": {
         "delete": {
           "operationId": "TestsController_deleteAllData",
           "summary": "Delete all data from DB",
