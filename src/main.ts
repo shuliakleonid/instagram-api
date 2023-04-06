@@ -6,6 +6,7 @@ import cors from 'cors';
 import { createWriteStream } from 'fs';
 import { get } from 'http';
 import { configNestApp } from './config.main';
+import cookieParser from 'cookie-parser';
 
 const serverUrl = 'http://localhost:5000';
 const options = {
@@ -33,13 +34,8 @@ async function bootstrap() {
 
     SwaggerModule.setup('swagger', app, swaggerDoc);
 
-    app.use(
-        cors({
-            credentials: true,
-            origin: true,
-        }),
-    );
-
+    app.use(cookieParser());
+    app.enableCors();
     await app.listen(5000);
 
     // get the swagger json file (if app is running in development mode)
