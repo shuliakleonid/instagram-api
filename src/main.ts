@@ -11,10 +11,10 @@ import cookieParser from 'cookie-parser';
 const serverUrl = 'http://localhost:5000';
 const options = {
     origin: true,
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    preflightContinue: false,
-    credentials: true,
-    allowedHeaders: 'Content-Type, Accept, Authorization',
+    // methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    // preflightContinue: false,
+    // credentials: true,
+    // allowedHeaders: 'Content-Type, Accept, Authorization',
 };
 
 // const options = {
@@ -41,9 +41,10 @@ async function bootstrap() {
     SwaggerModule.setup('swagger', app, swaggerDoc);
 
     app.use(cookieParser());
+
     app.enableCors(options);
 
-    await app.listen(3000);
+    await app.listen(5000);
 
     // get the swagger json file (if app is running in development mode)
     if (process.env.NODE_ENV === 'development') {
