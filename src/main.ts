@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import cors from 'cors';
 // core
 import { createWriteStream } from 'fs';
 import { get } from 'http';
@@ -32,10 +33,12 @@ async function bootstrap() {
 
     SwaggerModule.setup('swagger', app, swaggerDoc);
 
-    app.enableCors({
-        origin: true,
-        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    });
+    app.use(
+        cors({
+            credentials: true,
+            origin: true,
+        }),
+    );
 
     await app.listen(5000);
 
