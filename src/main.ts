@@ -31,8 +31,10 @@ async function bootstrap() {
 
     SwaggerModule.setup('swagger', app, swaggerDoc);
 
-    await app.listen(5000);
     await app.enableCors(options);
+
+    await app.listen(5000);
+
     // get the swagger json file (if app is running in development mode)
     if (process.env.NODE_ENV === 'development') {
         // write swagger ui files
