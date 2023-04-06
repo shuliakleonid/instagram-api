@@ -9,12 +9,19 @@ import { configNestApp } from './config.main';
 import cookieParser from 'cookie-parser';
 
 const serverUrl = 'http://localhost:5000';
+// const options = {
+//     origin: true,
+//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//     preflightContinue: false,
+//     credentials: true,
+//     allowedHeaders: 'Content-Type, Accept, Authorization',
+// };
+
 const options = {
-    origin: true,
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,LINK,UNLINK',
     preflightContinue: false,
-    credentials: true,
-    allowedHeaders: 'Content-Type, Accept, Authorization',
+    optionsSuccessStatus: 204,
 };
 
 async function bootstrap() {
