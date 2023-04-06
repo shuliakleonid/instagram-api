@@ -7,6 +7,13 @@ import { get } from 'http';
 import { configNestApp } from './config.main';
 
 const serverUrl = 'http://localhost:5000';
+const options = {
+    origin: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+    credentials: true,
+    allowedHeaders: 'Content-Type, Accept',
+};
 
 async function bootstrap() {
     const baseApp = await NestFactory.create(AppModule);
@@ -14,8 +21,7 @@ async function bootstrap() {
 
     const swaggerConfig = new DocumentBuilder()
         .setTitle('Inctagram API')
-        .setDescription('Powerfull team should use this api to develop the best Inctagramm app.' + ' ' +
-        'Base URL is https://it-team2-backend-mirror.vercel.app')
+        .setDescription('Powerfull team should use this api to develop the best Inctagramm app.' + ' ' + 'Base URL is https://it-team2-backend-mirror.vercel.app')
         .setVersion('02_week')
         .addBearerAuth()
         .addCookieAuth('refreshToken')
@@ -26,7 +32,7 @@ async function bootstrap() {
     SwaggerModule.setup('swagger', app, swaggerDoc);
 
     await app.listen(5000);
-
+    await app.enableCors(options);
     // get the swagger json file (if app is running in development mode)
     if (process.env.NODE_ENV === 'development') {
         // write swagger ui files

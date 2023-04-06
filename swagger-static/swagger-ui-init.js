@@ -14,14 +14,41 @@ window.onload = function() {
       "/auth/me": {
         "get": {
           "operationId": "AuthController_authMe",
+          "summary": "Get user's info. User should have access token",
           "parameters": [],
           "responses": {
             "200": {
-              "description": ""
+              "description": "User's info was received",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "title": "userAuthMeSchemaViewModel",
+                    "type": "object",
+                    "properties": {
+                      "email": {
+                        "type": "string",
+                        "example": "powerful@gmail.com"
+                      },
+                      "userId": {
+                        "type": "string",
+                        "example": "642b57873fd3241964fef9aa"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Check your cookie. Make sure that user is exist"
             }
           },
           "tags": [
             "Auth"
+          ],
+          "security": [
+            {
+              "bearer": []
+            }
           ]
         }
       },
@@ -65,7 +92,7 @@ window.onload = function() {
                     "title": "APIResultError",
                     "type": "object",
                     "properties": {
-                      "messages": {
+                      "errorsMessages": {
                         "type": "array",
                         "items": {
                           "type": "object",
@@ -132,7 +159,7 @@ window.onload = function() {
                     "title": "APIResultError",
                     "type": "object",
                     "properties": {
-                      "messages": {
+                      "errorsMessages": {
                         "type": "array",
                         "items": {
                           "type": "object",
@@ -199,7 +226,7 @@ window.onload = function() {
                     "title": "APIResultError",
                     "type": "object",
                     "properties": {
-                      "messages": {
+                      "errorsMessages": {
                         "type": "array",
                         "items": {
                           "type": "object",
@@ -323,6 +350,11 @@ window.onload = function() {
           },
           "tags": [
             "Auth"
+          ],
+          "security": [
+            {
+              "cookie": []
+            }
           ]
         }
       },
@@ -361,7 +393,7 @@ window.onload = function() {
                     "title": "APIResultError",
                     "type": "object",
                     "properties": {
-                      "messages": {
+                      "errorsMessages": {
                         "type": "array",
                         "items": {
                           "type": "object",
@@ -435,7 +467,7 @@ window.onload = function() {
                     "title": "APIResultError",
                     "type": "object",
                     "properties": {
-                      "messages": {
+                      "errorsMessages": {
                         "type": "array",
                         "items": {
                           "type": "object",
@@ -482,6 +514,11 @@ window.onload = function() {
           },
           "tags": [
             "Auth"
+          ],
+          "security": [
+            {
+              "cookie": []
+            }
           ]
         }
       },
@@ -581,18 +618,25 @@ window.onload = function() {
     },
     "info": {
       "title": "Inctagram API",
-      "description": "Powerfull team should use this api to develop the best Inctagramm app",
+      "description": "Powerfull team should use this api to develop the best Inctagramm app. Base URL is https://it-team2-backend-mirror.vercel.app",
       "version": "02_week",
       "contact": {}
     },
-    "tags": [
-      {
-        "name": "API",
-        "description": ""
-      }
-    ],
+    "tags": [],
     "servers": [],
     "components": {
+      "securitySchemes": {
+        "bearer": {
+          "scheme": "bearer",
+          "bearerFormat": "JWT",
+          "type": "http"
+        },
+        "cookie": {
+          "type": "apiKey",
+          "in": "cookie",
+          "name": "refreshToken"
+        }
+      },
       "schemas": {}
     }
   },

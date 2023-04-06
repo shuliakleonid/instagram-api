@@ -1,6 +1,6 @@
 import { IsEmail, IsString, Length } from 'class-validator';
 import { IsEmailInDb, IsLoginInDb } from '../../../../common/decorators/register.decorators';
-import {ApiProperty} from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateUserInputModelType {
     // @IsLoginInDb()

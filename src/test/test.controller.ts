@@ -1,15 +1,14 @@
-import {SkipThrottle} from '@nestjs/throttler';
-import {Controller, Delete, Get, HttpCode, HttpStatus, NotFoundException, Param, Put, Res} from "@nestjs/common";
-import {UserRepository} from "../bd/user/infrastructure/user.repository";
-import {ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
-import {sw_activateUser, sw_deleteAllData, sw_getUser, sw_getUsers} from "./test.swagger.info";
+import { SkipThrottle } from '@nestjs/throttler';
+import { Controller, Delete, Get, HttpCode, HttpStatus, NotFoundException, Param, Put, Res } from '@nestjs/common';
+import { UserRepository } from '../bd/user/infrastructure/user.repository';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { sw_activateUser, sw_deleteAllData, sw_getUser, sw_getUsers } from './test.swagger.info';
 
 @ApiTags('Testing')
 @SkipThrottle()
 @Controller('testing')
 export class TestsController {
-    constructor(protected userRepository: UserRepository) {
-    };
+    constructor(protected userRepository: UserRepository) {}
 
     @HttpCode(HttpStatus.OK)
     @Get('db-user/:userEmail')
@@ -20,7 +19,7 @@ export class TestsController {
         const user = await this.userRepository.getUserByEmail(userEmail);
         if (!user) throw new NotFoundException();
         return user;
-    };
+    }
 
     @HttpCode(HttpStatus.OK)
     @Get('db-users')
@@ -29,7 +28,7 @@ export class TestsController {
     async getUsers(@Param('userEmail') userEmail: string) {
         const users = await this.userRepository.getDBUsers();
         return users;
-    };
+    }
 
     @HttpCode(HttpStatus.NO_CONTENT)
     @Put('activate-user/:userEmail')
@@ -38,13 +37,13 @@ export class TestsController {
     @ApiResponse(sw_activateUser.status400)
     async activateUser(@Param('userEmail') userEmail: string) {
         const user = await this.userRepository.getUserByEmail(userEmail);
-        console.log(user)
+        console.log(user);
         if (!user) throw new NotFoundException();
         const updateUser = await this.userRepository.activateUser(userEmail);
-        console.log(updateUser)
+        console.log(updateUser);
         if (!updateUser) throw new NotFoundException();
         return;
-    };
+    }
 
     @HttpCode(HttpStatus.NO_CONTENT)
     @Delete('all-data')
@@ -53,5 +52,5 @@ export class TestsController {
     async deleteAllData() {
         await this.userRepository.deleteAll();
         return;
-    };
-};
+    }
+}

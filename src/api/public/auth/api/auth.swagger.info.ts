@@ -83,10 +83,10 @@ const userTokenSchema = {
     type: 'object',
     properties: {
         accessToken: {
-            type: 'string'
-        }
-    }
-}
+            type: 'string',
+        },
+    },
+};
 
 const userAuthMeSchema = {
     title: 'userAuthMeSchemaViewModel',
@@ -94,30 +94,30 @@ const userAuthMeSchema = {
     properties: {
         email: {
             type: 'string',
-            example: 'powerful@gmail.com'
+            example: 'powerful@gmail.com',
         },
         userId: {
             type: 'string',
-            example: '642b57873fd3241964fef9aa'
-        }
-    }
-}
+            example: '642b57873fd3241964fef9aa',
+        },
+    },
+};
 
 export const sw_authMe = {
-    summary: {summary: 'Get user\'s info. User should have access token'},
+    summary: { summary: "Get user's info. User should have access token" },
     status200: {
         status: 200,
-        description: 'User\'s info was received',
-        schema: userAuthMeSchema
+        description: "User's info was received",
+        schema: userAuthMeSchema,
     },
     status401: {
         status: 401,
         description: 'Check your cookie. Make sure that user is exist',
     },
-}
+};
 
 export const sw_regitstration = {
-    summary: {summary: 'Registration for users'},
+    summary: { summary: 'Registration for users' },
     status204: {
         status: 204,
         description: 'Account for user was created',
@@ -149,7 +149,7 @@ export const sw_regitstration = {
 };
 
 export const sw_registrationEmailResending = {
-    summary: {summary: "Send confirmation code to user's email"},
+    summary: { summary: "Send confirmation code to user's email" },
     status204: {
         status: 204,
         description: 'Email succesfully sent',
@@ -176,11 +176,11 @@ export const sw_registrationEmailResending = {
 };
 
 export const sw_login = {
-    summary: {summary: 'User can login and do something into app'},
+    summary: { summary: 'User can login and do something into app' },
     status200: {
         status: 200,
         description: 'Successfully login and get tokens. Refresh token sent into secure cookie',
-        schema: userTokenSchema
+        schema: userTokenSchema,
     },
     status401: {
         status: 401,
@@ -206,28 +206,28 @@ export const sw_login = {
 };
 
 export const sw_refreshToken = {
-    summary: {summary: 'User can update refresh and access tokens. User should have refresh token'},
+    summary: { summary: 'User can update refresh and access tokens. User should have refresh token' },
     status200: {
         status: 200,
         description: 'Tokens was successfully updated and sent to user. Refresh token sent into secure cookie',
-        schema: userTokenSchema
+        schema: userTokenSchema,
     },
     status401: {
         status: 401,
         description: 'Refresh token is un exist or expired',
     },
-}
+};
 
 export const sw_registrationConfirmation = {
-    summary: {summary: 'User can activate account by confirmation code'},
+    summary: { summary: 'User can activate account by confirmation code' },
     status204: {
         status: 204,
-        description: 'User\'s account was activated',
+        description: "User's account was activated",
     },
     status400: {
         status: 400,
         description: 'User is already activated or confirm code is incorrect/expired',
-        schema: badRequestCodeConfirmSchema
+        schema: badRequestCodeConfirmSchema,
     },
     status429: resStatus429,
     inputSchema: {
@@ -242,19 +242,19 @@ export const sw_registrationConfirmation = {
                 },
             },
         },
-    }
-}
+    },
+};
 
 export const sw_passwordRecoveryCode = {
-    summary: {summary: 'User can request recovery code to set new password'},
+    summary: { summary: 'User can request recovery code to set new password' },
     status204: {
         status: 204,
-        description: 'Mail with recovery code was sent to user\'s email',
+        description: "Mail with recovery code was sent to user's email",
     },
     status400: {
         status: 400,
         description: 'Incorrect email. Maybe user is un exist in app',
-        schema: badRequestSchema
+        schema: badRequestSchema,
     },
     status429: resStatus429,
     inputSchema: {
@@ -270,10 +270,10 @@ export const sw_passwordRecoveryCode = {
             },
         },
     },
-}
+};
 
 export const sw_newPassword = {
-    summary: {summary: 'User can set new password. User should have password recovery code'},
+    summary: { summary: 'User can set new password. User should have password recovery code' },
     status204: {
         status: 204,
         description: 'New password was set to user',
@@ -281,7 +281,7 @@ export const sw_newPassword = {
     status400: {
         status: 400,
         description: 'Incorrect recovery code',
-        schema: badRequestRecoveryCodeSchema
+        schema: badRequestRecoveryCodeSchema,
     },
     status429: resStatus429,
     inputSchema: {
@@ -294,7 +294,7 @@ export const sw_newPassword = {
                     example: 'newPassword',
                     description: 'it should be valid password',
                     minLength: 6,
-                    maxLength: 20
+                    maxLength: 20,
                 },
                 recoveryCode: {
                     type: 'string',
@@ -304,10 +304,10 @@ export const sw_newPassword = {
             },
         },
     },
-}
+};
 
 export const sw_logout = {
-    summary: {summary: 'User can logout. User should have refresh token. User\'s access and refresh token will be deleted'},
+    summary: { summary: "User can logout. User should have refresh token. User's access and refresh token will be deleted" },
     status204: {
         status: 204,
         description: 'User was logout. Tokens was deleted',
@@ -316,4 +316,4 @@ export const sw_logout = {
         status: 401,
         description: 'Refresh token is un exist or expired',
     },
-}
+};

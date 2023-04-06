@@ -1,8 +1,8 @@
-import {Test, TestingModule} from '@nestjs/testing';
-import {HttpStatus, INestApplication} from '@nestjs/common';
+import { Test, TestingModule } from '@nestjs/testing';
+import { HttpStatus, INestApplication } from '@nestjs/common';
 import request from 'supertest';
-import {AppModule} from '../src/app.module';
-import {configNestApp} from '../src/config.main';
+import { AppModule } from '../src/app.module';
+import { configNestApp } from '../src/config.main';
 
 describe('AuthController (e2e)', () => {
     let app: INestApplication;
@@ -13,54 +13,53 @@ describe('AuthController (e2e)', () => {
 
     const badUserInput = {
         email: 'eja777one@gmail.com',
-        password: '123'
+        password: '123',
     };
 
     const badUserInputError = {
         errorsMessages: [
             {
                 message: expect.any(String),
-                field: 'password'
-            }
-        ]
+                field: 'password',
+            },
+        ],
     };
 
     const emailInputError = {
         errorsMessages: [
             {
                 message: expect.any(String),
-                field: 'email'
-            }
-        ]
+                field: 'email',
+            },
+        ],
     };
 
     const confirmCodeInputError = {
         errorsMessages: [
             {
                 message: expect.any(String),
-                field: 'code'
-            }
-        ]
+                field: 'code',
+            },
+        ],
     };
 
     const passRecoveryCodeInputError = {
         errorsMessages: [
             {
                 message: expect.any(String),
-                field: 'code'
-            }
-        ]
+                field: 'code',
+            },
+        ],
     };
 
     const userInput = {
         email: 'eja777one@gmail.com',
-        password: '1234567'
+        password: '1234567',
     };
 
     const badEmailInput = {
-        email: 'pinguin123@gmail.com'
+        email: 'pinguin123@gmail.com',
     };
-
 
     beforeEach(async () => {
         const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -72,17 +71,13 @@ describe('AuthController (e2e)', () => {
         await app.init();
     });
 
-    it("Delete all data", async () => {
-        await request(app.getHttpServer())
-            .delete(`/testing/all-data`)
-            .expect(HttpStatus.NO_CONTENT);
+    it('Delete all data', async () => {
+        await request(app.getHttpServer()).delete(`/testing/all-data`).expect(HttpStatus.NO_CONTENT);
     });
 
     // TEST #01
     it("User can't registrate. Wrong password. Status 400", async () => {
-        const response = await request(app.getHttpServer())
-            .post(`/auth/registration`)
-            .send(badUserInput)
+        const response = await request(app.getHttpServer()).post(`/auth/registration`).send(badUserInput);
 
         const result = response.body;
 
@@ -92,10 +87,8 @@ describe('AuthController (e2e)', () => {
     });
 
     // TEST #02
-    it("User should be registrated. Status 204", async () => {
-        const response = await request(app.getHttpServer())
-            .post(`/auth/registration`)
-            .send(userInput)
+    it('User should be registrated. Status 204', async () => {
+        const response = await request(app.getHttpServer()).post(`/auth/registration`).send(userInput);
 
         const result = response.body;
 
@@ -105,9 +98,7 @@ describe('AuthController (e2e)', () => {
 
     // TEST #03
     it("User can't registrate. Email already exist. Status 400", async () => {
-        const response = await request(app.getHttpServer())
-            .post(`/auth/registration`)
-            .send(userInput)
+        const response = await request(app.getHttpServer()).post(`/auth/registration`).send(userInput);
 
         const result = response.body;
 
@@ -117,10 +108,8 @@ describe('AuthController (e2e)', () => {
     });
 
     // TEST #04
-    it("Resend email confirmCode. Email is un exist. Status 400", async () => {
-        const response = await request(app.getHttpServer())
-            .post(`/auth/registration-email-resending`)
-            .send(badEmailInput)
+    it('Resend email confirmCode. Email is un exist. Status 400', async () => {
+        const response = await request(app.getHttpServer()).post(`/auth/registration-email-resending`).send(badEmailInput);
 
         const result = response.body;
 
@@ -130,10 +119,8 @@ describe('AuthController (e2e)', () => {
     });
 
     // TEST #05
-    it("Resend email confirmCode. Status 204", async () => {
-        const response = await request(app.getHttpServer())
-            .post(`/auth/registration-email-resending`)
-            .send({email: userInput.email})
+    it('Resend email confirmCode. Status 204', async () => {
+        const response = await request(app.getHttpServer()).post(`/auth/registration-email-resending`).send({ email: userInput.email });
 
         const result = response.body;
 
@@ -142,9 +129,8 @@ describe('AuthController (e2e)', () => {
     });
 
     // TEST #00
-    it("Get confirm code for users. Status 204", async () => {
-        const response = await request(app.getHttpServer())
-            .get(`/testing/db-user/${userInput.email}`)
+    it('Get confirm code for users. Status 204', async () => {
+        const response = await request(app.getHttpServer()).get(`/testing/db-user/${userInput.email}`);
 
         userConfirmCode = response.body?.emailConfirmation?.confirmationCode;
 
@@ -153,10 +139,8 @@ describe('AuthController (e2e)', () => {
     });
 
     // TEST #06
-    it("Activate user\'s account. Incorrect confirmCode. Status 400", async () => {
-        const response = await request(app.getHttpServer())
-            .post(`/auth/registration-confirmation`)
-            .send({code: '123'})
+    it("Activate user's account. Incorrect confirmCode. Status 400", async () => {
+        const response = await request(app.getHttpServer()).post(`/auth/registration-confirmation`).send({ code: '123' });
 
         const result = response.body;
 
@@ -166,10 +150,8 @@ describe('AuthController (e2e)', () => {
     });
 
     // TEST #07
-    it("Activate user\'s account. Status 204", async () => {
-        const response = await request(app.getHttpServer())
-            .post(`/auth/registration-confirmation`)
-            .send({code: userConfirmCode})
+    it("Activate user's account. Status 204", async () => {
+        const response = await request(app.getHttpServer()).post(`/auth/registration-confirmation`).send({ code: userConfirmCode });
 
         const result = response.body;
 
@@ -179,9 +161,7 @@ describe('AuthController (e2e)', () => {
 
     // TEST #08
     it("User can't login. Wrong password. Status 401", async () => {
-        const response = await request(app.getHttpServer())
-            .post(`/auth/login`)
-            .send({email: userInput.email, password: '123'})
+        const response = await request(app.getHttpServer()).post(`/auth/login`).send({ email: userInput.email, password: '123' });
 
         const result = response.body;
 
@@ -190,26 +170,22 @@ describe('AuthController (e2e)', () => {
     });
 
     // TEST #09
-    it("User login. Status 200", async () => {
-        const response = await request(app.getHttpServer())
-            .post(`/auth/login`)
-            .send(userInput)
+    it('User login. Status 200', async () => {
+        const response = await request(app.getHttpServer()).post(`/auth/login`).send(userInput);
 
         const result = response.body;
 
         expect(response).toBeDefined();
         expect(response.status).toBe(HttpStatus.OK);
-        expect(result).toStrictEqual({accessToken: expect.any(String)});
+        expect(result).toStrictEqual({ accessToken: expect.any(String) });
 
         accessToken = result.accessToken;
-        cookie = response.get("Set-Cookie");
+        cookie = response.get('Set-Cookie');
     });
 
     // TEST #10
-    it("Refresh tokens for users. Bad cookie. Status 401", async () => {
-        const response = await request(app.getHttpServer())
-            .post(`/auth/refresh-token`)
-            .set("Cookie", '123');
+    it('Refresh tokens for users. Bad cookie. Status 401', async () => {
+        const response = await request(app.getHttpServer()).post(`/auth/refresh-token`).set('Cookie', '123');
 
         const result = response.body;
 
@@ -218,26 +194,22 @@ describe('AuthController (e2e)', () => {
     });
 
     // TEST #11
-    it("Refresh tokens for users. Status 200", async () => {
-        const response = await request(app.getHttpServer())
-            .post(`/auth/refresh-token`)
-            .set("Cookie", cookie)
+    it('Refresh tokens for users. Status 200', async () => {
+        const response = await request(app.getHttpServer()).post(`/auth/refresh-token`).set('Cookie', cookie);
 
         const result = response.body;
 
         expect(response).toBeDefined();
         expect(response.status).toBe(HttpStatus.OK);
-        expect(result).toStrictEqual({accessToken: expect.any(String)});
+        expect(result).toStrictEqual({ accessToken: expect.any(String) });
 
         accessToken = result.accessToken;
-        cookie = response.get("Set-Cookie");
+        cookie = response.get('Set-Cookie');
     });
 
     // TEST #12
-    it("Get recovery code to set new password. Status 400", async () => {
-        const response = await request(app.getHttpServer())
-            .post(`/auth/password-recovery-code`)
-            .send(badEmailInput)
+    it('Get recovery code to set new password. Status 400', async () => {
+        const response = await request(app.getHttpServer()).post(`/auth/password-recovery-code`).send(badEmailInput);
 
         const result = response.body;
 
@@ -247,10 +219,8 @@ describe('AuthController (e2e)', () => {
     });
 
     // TEST #13
-    it("Get recovery code to set new password. Status 204", async () => {
-        const response = await request(app.getHttpServer())
-            .post(`/auth/password-recovery-code`)
-            .send({email: userInput.email})
+    it('Get recovery code to set new password. Status 204', async () => {
+        const response = await request(app.getHttpServer()).post(`/auth/password-recovery-code`).send({ email: userInput.email });
 
         const result = response.body;
 
@@ -259,9 +229,8 @@ describe('AuthController (e2e)', () => {
     });
 
     // TEST #00
-    it("Get recovery code to set new password. Status 204", async () => {
-        const response = await request(app.getHttpServer())
-            .get(`/testing/db-user/${userInput.email}`)
+    it('Get recovery code to set new password. Status 204', async () => {
+        const response = await request(app.getHttpServer()).get(`/testing/db-user/${userInput.email}`);
 
         passRecoveryCode = response.body?.emailConfirmation?.recoveryCode;
 
@@ -270,10 +239,8 @@ describe('AuthController (e2e)', () => {
     });
 
     // TEST #14
-    it("Set new password to user. Status 400", async () => {
-        const response = await request(app.getHttpServer())
-            .post(`/auth/new-password`)
-            .send({newPassword: 'qwerty123', recoveryCode: '123'})
+    it('Set new password to user. Status 400', async () => {
+        const response = await request(app.getHttpServer()).post(`/auth/new-password`).send({ newPassword: 'qwerty123', recoveryCode: '123' });
 
         const result = response.body;
 
@@ -283,10 +250,8 @@ describe('AuthController (e2e)', () => {
     });
 
     // TEST #15
-    it("Set new password to user. Status 204", async () => {
-        const response = await request(app.getHttpServer())
-            .post(`/auth/new-password`)
-            .send({newPassword: 'qwerty123', recoveryCode: passRecoveryCode})
+    it('Set new password to user. Status 204', async () => {
+        const response = await request(app.getHttpServer()).post(`/auth/new-password`).send({ newPassword: 'qwerty123', recoveryCode: passRecoveryCode });
 
         const result = response.body;
 
@@ -297,10 +262,10 @@ describe('AuthController (e2e)', () => {
     });
 
     // TEST #16
-    it("User login. Status 401", async () => {
+    it('User login. Status 401', async () => {
         const response = await request(app.getHttpServer())
             .post(`/auth/login`)
-            .send({...userInput, password: '1234567'})
+            .send({ ...userInput, password: '1234567' });
 
         const result = response.body;
 
@@ -309,26 +274,22 @@ describe('AuthController (e2e)', () => {
     });
 
     // TEST #17
-    it("User login. Status 200", async () => {
-        const response = await request(app.getHttpServer())
-            .post(`/auth/login`)
-            .send(userInput)
+    it('User login. Status 200', async () => {
+        const response = await request(app.getHttpServer()).post(`/auth/login`).send(userInput);
 
         const result = response.body;
 
         expect(response).toBeDefined();
         expect(response.status).toBe(HttpStatus.OK);
-        expect(result).toStrictEqual({accessToken: expect.any(String)});
+        expect(result).toStrictEqual({ accessToken: expect.any(String) });
 
         accessToken = result.accessToken;
-        cookie = response.get("Set-Cookie");
+        cookie = response.get('Set-Cookie');
     });
 
     // TEST #18
     it("Get user's info. Status 401", async () => {
-        const response = await request(app.getHttpServer())
-            .get(`/auth/me`)
-            .set("Authorization", `Bearer {accessToken.accessToken}`)
+        const response = await request(app.getHttpServer()).get(`/auth/me`).set('Authorization', `Bearer {accessToken.accessToken}`);
 
         const result = response.body;
 
@@ -338,22 +299,18 @@ describe('AuthController (e2e)', () => {
 
     // TEST #19
     it("Get user's info. Status 200", async () => {
-        const response = await request(app.getHttpServer())
-            .get(`/auth/me`)
-            .set("Authorization", `Bearer ${accessToken}`)
+        const response = await request(app.getHttpServer()).get(`/auth/me`).set('Authorization', `Bearer ${accessToken}`);
 
         const result = response.body;
 
         expect(response).toBeDefined();
         expect(response.status).toBe(HttpStatus.OK);
-        expect(result).toStrictEqual({email: userInput.email ,userId: expect.any(String)});
+        expect(result).toStrictEqual({ email: userInput.email, userId: expect.any(String) });
     });
 
     // TEST #20
-    it("User logout. Status 401", async () => {
-        const response = await request(app.getHttpServer())
-            .post(`/auth/logout`)
-            .set("Cookie", '123');
+    it('User logout. Status 401', async () => {
+        const response = await request(app.getHttpServer()).post(`/auth/logout`).set('Cookie', '123');
 
         const result = response.body;
 
@@ -362,10 +319,8 @@ describe('AuthController (e2e)', () => {
     });
 
     // TEST #21
-    it("User logout. Status 204", async () => {
-        const response = await request(app.getHttpServer())
-            .post(`/auth/logout`)
-            .set("Cookie", cookie);
+    it('User logout. Status 204', async () => {
+        const response = await request(app.getHttpServer()).post(`/auth/logout`).set('Cookie', cookie);
 
         const result = response.body;
 
@@ -374,10 +329,8 @@ describe('AuthController (e2e)', () => {
     });
 
     // TEST #22
-    it("User logout. Status 401", async () => {
-        const response = await request(app.getHttpServer())
-            .post(`/auth/logout`)
-            .set("Cookie", cookie);
+    it('User logout. Status 401', async () => {
+        const response = await request(app.getHttpServer()).post(`/auth/logout`).set('Cookie', cookie);
 
         const result = response.body;
 
