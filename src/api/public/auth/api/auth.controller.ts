@@ -52,6 +52,7 @@ export class AuthController {
     @ApiResponse(sw_authMe.status200)
     @ApiResponse(sw_authMe.status401)
     async authMe(@UserDecorator() user: User) {
+        console.log('asd');
         return { email: user.accountData.email, userId: user.accountData.id };
     }
 
