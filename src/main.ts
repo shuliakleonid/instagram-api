@@ -36,7 +36,7 @@ async function bootstrap() {
 
     app.use(cookieParser());
     app.enableCors();
-    await app.listen(5000);
+    await app.listen(3000);
 
     // get the swagger json file (if app is running in development mode)
     if (process.env.NODE_ENV === 'development') {
