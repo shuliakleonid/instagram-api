@@ -27,7 +27,7 @@ const options = {
 async function bootstrap() {
     const baseApp = await NestFactory.create(AppModule);
     const app = configNestApp(baseApp);
-
+    app.setGlobalPrefix('api');
     app.enableCors(options);
     app.use(cors());
     const swaggerConfig = new DocumentBuilder()
