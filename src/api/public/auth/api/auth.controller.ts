@@ -53,7 +53,6 @@ export class AuthController {
     @ApiResponse(sw_authMe.status401)
     async authMe(@UserDecorator() user: User) {
         console.log('asd');
-        return true;
         return { email: user.accountData.email, userId: user.accountData.id };
     }
 
@@ -122,7 +121,7 @@ export class AuthController {
     }
 
     @ApiCookieAuth()
-    //@UseGuards(CookieGuard)
+    @UseGuards(CookieGuard)
     @HttpCode(HttpStatus.OK)
     @Post('refresh-token')
     @ApiOperation(sw_refreshToken.summary)
